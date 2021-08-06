@@ -228,7 +228,7 @@ class Train_API():
         self.adam_beta2 = 0.999
         self.adam_epsilon = 1e-8
         self.weight_decay = 0
-        self.gamma = 0.99
+        self.gamma = args.gamma
         self.lr = args.lr
 
         self.compute_metric = dataset.compute_metric
@@ -319,14 +319,15 @@ class Train_API():
 
 def construct_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--lr', type=float, default=5e-5)
-    parser.add_argument('--batch_size', type=int, default=4)
+    parser.add_argument('--lr', type=float, default=5e-2)
+    parser.add_argument('--gamma', type=float, default=0.95)
+    parser.add_argument('--batch_size', type=int, default=16)
     parser.add_argument('--pre_seq_len', type=int, default=8)
     parser.add_argument('--mid_dim', type=int, default=512)
     parser.add_argument('--model', type=str, choices=['bert', 'deberta'], default='bert')
     parser.add_argument('--model_size', type=str, choices=['base', 'large'], default='base')
     parser.add_argument('--method', type=str, choices=['finetune', 'prefix'], default='prefix')
-    parser.add_argument('--epoch', type=int, default=1)
+    parser.add_argument('--epoch', type=int, default=10)
     parser.add_argument('--dropout', type=float, default=0.3)
     args = parser.parse_args()
     return args

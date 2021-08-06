@@ -100,16 +100,17 @@ class BertForQuestionAnswering(BertPreTrainedModel):
 class PrefixEncoder(torch.nn.Module):
     def __init__(self, config):
         super().__init__()
-        self.embedding = torch.nn.Embedding(config.pre_seq_len, config.hidden_size)
-        self.trans = torch.nn.Sequential(
-            torch.nn.Linear(config.hidden_size, config.mid_dim),
-            torch.nn.Tanh(),
-            torch.nn.Linear(config.mid_dim, config.num_hidden_layers * 2 * config.hidden_size)
-        )
+        self.embedding = torch.nn.Embedding(config.pre_seq_len, config.num_hidden_layers * 2 * config.hidden_size)
+        # self.trans = torch.nn.Sequential(
+        #     torch.nn.Linear(config.hidden_size, config.mid_dim),
+        #     torch.nn.Tanh(),
+        #     torch.nn.Linear(config.mid_dim, config.num_hidden_layers * 2 * config.hidden_size)
+        # )
     
     def forward(self, prefix: torch.Tensor):
-        prefix_tokens = self.embedding(prefix)
-        past_key_values = self.trans(prefix_tokens)
+        # prefix_tokens = self.embedding(prefix)
+        # past_key_values = self.trans(prefix_tokens)
+        past_key_values = self.embedding(prefix)
         return past_key_values
 
 
